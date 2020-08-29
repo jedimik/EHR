@@ -14,6 +14,8 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using EHR_project.Config;
 using EHR_project;
+using MySql.Data.MySqlClient;
+using System.Diagnostics;
 
 namespace EHR_project.View
 {
@@ -28,23 +30,31 @@ namespace EHR_project.View
         }
         private string nickname;
         private string pwd;
+        private MySqlDataReader reader;
         private void btnLogin_Click(object sender, RoutedEventArgs e)
-        {/*
+        {
             lblErrorLP.Content = ""; //nulovani erroru
             nickname = tbUsrName.Text;
             pwd = tbUsrPwd.Text;
 
             Dtbconnect dtb = new Dtbconnect();
-            dtb.querry("SELECT id,name,surname FROM user_staff WHERE nickname='" + nickname + "' AND pwd='" + pwd + "';");
-            MainWindow.string_list = dtb.returnvalue();
-            if (MainWindow.string_list.Count > 0)
+            string cmd = "SELECT id,name,surname FROM user_staff WHERE nickname='" + nickname + "' AND pwd='" + pwd + "';";
+            this.reader =dtb.querry(cmd);
+            if (reader.HasRows)
             {
+                while (reader.Read())
+                {
+                    MainWindow.string_list.Insert(0,reader.GetInt16(0).ToString());
+                    MainWindow.string_list.Insert(1,reader.GetString(1));
+                    MainWindow.string_list.Insert(2,reader.GetString(2));                    
+                }
+                dtb.closeConn();
                 MainWindow.wmain.redirect_and_login();
             }
             else
             {
                 lblErrorLP.Content = "Zadali jste špatné nebo neexistující identifikační údaje. Zkuste to prosím znovu.";
-            }*/
+            }
         }
     }
 }

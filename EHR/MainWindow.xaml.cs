@@ -32,16 +32,17 @@ namespace EHR_project
         private static User user_main { get; set; }
         private static Generall gen_main { get; set; }
         private static Login_page lp_main { get; set; }
-        public static List<String> string_list { get; set; } //Vracene hodnoty
+        public static List<String> string_list = new List<String>(); //Vracene hodnoty
         public void load_base()
         {
-            MainW.Content = new TestPage();
-           /* lp_main = new Login_page();
-            MainW.Content = lp_main;*/
+           // MainW.Content = new TestPage();
+            lp_main = new Login_page();
+            MainW.Content = lp_main;
         }
 
         public void redirect_and_login()
         {
+            Debug.Write(Int32.Parse(string_list[0]) + string_list[1] + string_list[2]);
             user_main = new User(Int32.Parse(string_list[0]), string_list[1], string_list[2]);
             gen_main = new Generall(user_main);
             MainW.Content = gen_main;
