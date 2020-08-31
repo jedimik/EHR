@@ -39,16 +39,16 @@ namespace EHR_project.View
 
             Dtbconnect dtb = new Dtbconnect();
             string cmd = "SELECT id,name,surname FROM user_staff WHERE nickname='" + nickname + "' AND pwd='" + pwd + "';";
-            this.reader =dtb.querry(cmd);
+            this.reader =dtb.Select(cmd);
             if (reader.HasRows)
             {
                 while (reader.Read())
                 {
-                    MainWindow.string_list.Insert(0,reader.GetInt16(0).ToString());
-                    MainWindow.string_list.Insert(1,reader.GetString(1));
-                    MainWindow.string_list.Insert(2,reader.GetString(2));                    
+                    MainWindow.wmain.string_list.Insert(0,reader.GetInt16(0).ToString());
+                    MainWindow.wmain.string_list.Insert(1,reader.GetString(1));
+                    MainWindow.wmain.string_list.Insert(2,reader.GetString(2));                    
                 }
-                dtb.closeConn();
+                dtb.CloseConn();
                 MainWindow.wmain.redirect_and_login();
             }
             else

@@ -29,21 +29,22 @@ namespace EHR_project
             load_base();
             wmain = this;
         }
-        private static User user_main { get; set; }
-        private static Generall gen_main { get; set; }
-        private static Login_page lp_main { get; set; }
-        public static List<String> string_list = new List<String>(); //Vracene hodnoty
+        private  User user_main { get; set; }
+        public static Generall gen_main { get; set; }
+        private  Login_page lp_main { get; set; }
+        public  List<String> string_list = new List<String>(); //Vracene hodnoty
         public void load_base()
         {
-           // MainW.Content = new TestPage();
+            //Pro testovani
+            //MainW.Content = new TestPage();
+            //Main
             lp_main = new Login_page();
             MainW.Content = lp_main;
         }
 
         public void redirect_and_login()
         {
-            Debug.Write(Int32.Parse(string_list[0]) + string_list[1] + string_list[2]);
-            user_main = new User(Int32.Parse(string_list[0]), string_list[1], string_list[2]);
+            this.user_main = new User(Int32.Parse(string_list[0]), string_list[1], string_list[2]);
             gen_main = new Generall(user_main);
             MainW.Content = gen_main;
         }
@@ -52,14 +53,19 @@ namespace EHR_project
             if (user_main.logged.Equals(true))
             {
                 lp_main = null;
+                user_main = null;
+                gen_main = null;
+                string_list.Clear();
                 load_base();
             }
             else { }
         }
+
         private User returnUser(User user)
         {
             user_main = user;
             return user_main;
         }
+
     }
 }

@@ -41,7 +41,6 @@ namespace EHR_project.View
 
         private void btn_logout_Click(object sender, RoutedEventArgs e)
         {
-            user.logout_user(user.id);
             MainWindow.wmain.destroy_everything();
         }
 

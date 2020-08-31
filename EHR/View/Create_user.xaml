@@ -9,10 +9,10 @@
       Title="Create_user">
 
     <Grid Background="LightGray">
-        <TextBox HorizontalAlignment="Left" Height="23" Margin="77,180,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120"/>
-        <TextBox HorizontalAlignment="Left" Height="23" Margin="77,101,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120"/>
-        <TextBox HorizontalAlignment="Left" Height="23" Margin="77,140,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120"/>
-        <TextBox HorizontalAlignment="Left" Height="23" Margin="77,217,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120"/>
+        <TextBox x:Name="tb_tel_number" HorizontalAlignment="Left" Height="23" Margin="77,180,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+        <TextBox x:Name="tb_name" HorizontalAlignment="Left" Height="23" Margin="77,101,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+        <TextBox x:Name="tb_surname" HorizontalAlignment="Left" Height="23" Margin="77,140,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+        <TextBox x:Name="tb_insurance" HorizontalAlignment="Left" Height="23" Margin="77,217,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
         <Label Content="Registrace nového pacienta." HorizontalAlignment="Left" Margin="164,10,0,0" VerticalAlignment="Top" FontSize="34" FontWeight="Bold" Height="71" Width="486"/>
         <Label Content="Jméno" HorizontalAlignment="Left" Margin="32,101,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.52,0.428"/>
         <Label Content="Příjmení" HorizontalAlignment="Left" Margin="24,140,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.52,0.428"/>
@@ -25,10 +25,11 @@
         <Button x:Name="btn_register" Content="Zaregistrovat" HorizontalAlignment="Left" Margin="310,299,0,0" VerticalAlignment="Top" Width="97" IsCancel="True" Click="register_click" Height="33"/>
         <ComboBox x:Name="cb_sex" HorizontalAlignment="Left" Margin="77,256,0,0" VerticalAlignment="Top" Width="120"/>
         <Label Content="Pohlaví" HorizontalAlignment="Left" Margin="29,256,0,0" VerticalAlignment="Top" RenderTransformOrigin="-1,-2.423"/>
-        <TextBox HorizontalAlignment="Left" Height="23" Margin="487,121,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120"/>
-        <TextBox HorizontalAlignment="Left" Height="23" Margin="487,221,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120"/>
-        <TextBox HorizontalAlignment="Left" Height="23" Margin="487,185,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120"/>
-        <TextBox HorizontalAlignment="Left" Height="23" Margin="487,151,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120"/>
+        <TextBox x:Name="tb_street_name" HorizontalAlignment="Left" Height="23" Margin="487,121,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+        <TextBox x:Name="tb_psc" HorizontalAlignment="Left" Height="23" Margin="487,221,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+        <TextBox x:Name="tb_city" HorizontalAlignment="Left" Height="23" Margin="487,185,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+        <TextBox x:Name="tb_house_number" HorizontalAlignment="Left" Height="23" Margin="487,151,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+        <Button x:Name="btn_back_to_generall" Content="Vrátit se" HorizontalAlignment="Left" Margin="10,35,0,0" VerticalAlignment="Top" Width="97" Height="23" Click="btn_back_to_generall_Click"/>
 
     </Grid>
 </Page>

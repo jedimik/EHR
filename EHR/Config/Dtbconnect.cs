@@ -23,7 +23,7 @@ namespace EHR_project.Config
         static string Mysqlconn = "Server=localhost;Database=ehr;Uid=ehr;Pwd=ehr;";
         //List<String> string_list = new List<String>();
         public MySqlConnection connection;
-        public MySqlDataReader querry(string command)
+        public MySqlDataReader Select(string command)
         {
             this.connection = new MySqlConnection(Mysqlconn);
             MySqlCommand cmd = new MySqlCommand(command, connection);
@@ -31,7 +31,15 @@ namespace EHR_project.Config
             MySqlDataReader reader = cmd.ExecuteReader();
             return reader;
         }
-        public void closeConn()
+        public void Insert(string command)
+        {
+            this.connection = new MySqlConnection(Mysqlconn);
+            MySqlCommand cmd = new MySqlCommand(command, connection);
+            connection.Open();
+            MySqlDataReader reader = cmd.ExecuteReader();
+            CloseConn();
+        }
+        public void CloseConn()
         {
             this.connection.Close();
         }
