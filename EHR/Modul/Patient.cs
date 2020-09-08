@@ -8,15 +8,17 @@ namespace EHR_project.Modul
 {
     class Patient
     {
-        private string name { get; set; }
-        private string surname { get; set; }
-        private int sexID { get; set; }
-        private int addressID { get; set; }
-        private int tel_number { get; set; }
-        private int insuranceID { get; set; }
+        public int id { get; set; }
+        public string name { get; set; }
+        public string surname { get; set; }
+        public int sexID { get; set; }
+        public int addressID { get; set; }
+        public int tel_number { get; set; }
+        public int insuranceID { get; set; }
 
-        public Patient(string name, string surname, int sexID, int addressID, int tel_number, int insuranceID)
+        public Patient(int id, string name, string surname, int sexID, int addressID, int tel_number, int insuranceID)
         {
+            this.id = id;
             this.name = name;
             this.surname = surname;
             this.sexID = sexID;

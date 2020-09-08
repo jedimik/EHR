@@ -29,7 +29,7 @@ namespace EHR_project
             load_base();
             wmain = this;
         }
-        private  User user_main { get; set; }
+        private static User user_main { get; set; }
         public static Generall gen_main { get; set; }
         private  Login_page lp_main { get; set; }
         public  List<String> string_list = new List<String>(); //Vracene hodnoty
@@ -44,21 +44,19 @@ namespace EHR_project
 
         public void redirect_and_login()
         {
-            this.user_main = new User(Int32.Parse(string_list[0]), string_list[1], string_list[2]);
+            user_main = new User(Int32.Parse(string_list[0]), string_list[1], string_list[2]);
             gen_main = new Generall(user_main);
             MainW.Content = gen_main;
         }
         public void destroy_everything()
         {
-            if (user_main.logged.Equals(true))
-            {
+         
                 lp_main = null;
                 user_main = null;
                 gen_main = null;
                 string_list.Clear();
                 load_base();
-            }
-            else { }
+
         }
 
         private User returnUser(User user)
