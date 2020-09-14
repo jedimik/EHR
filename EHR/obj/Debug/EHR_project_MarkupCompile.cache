@@ -10,11 +10,11 @@ none
 false
 DEBUG;TRACE
 C:\Users\Tomáš\source\repos\EHR_project\App.xaml
-5-2051944351
+9-538272227
 
-13-2043692734
+19-2131424061
 20921686794
-MainWindow.xaml;TestPage.xaml;View\Create_user.xaml;View\Generall.xaml;View\Login_page.xaml;
+CRUD\Update_user.xaml;MainWindow.xaml;TestPage.xaml;CRUD\Create_user.xaml;View\Patient_view\Anamnesis.xaml;View\Generall.xaml;View\Login_page.xaml;View\Patient_view\Examination.xaml;View\Patient_view\Medication_list.xaml;
 
 False
 

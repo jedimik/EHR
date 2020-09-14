@@ -78,19 +78,33 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Modul\Address.cs" />
+    <Compile Include="CRUD\Update_user.xaml.cs">
+      <DependentUpon>Update_user.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Modul\Examination_concrete.cs" />
+    <Compile Include="Modul\Medicine.cs" />
     <Compile Include="Modul\Patient.cs" />
+    <Compile Include="Modul\Patient_examination.cs" />
     <Compile Include="TestPage.xaml.cs">
       <DependentUpon>TestPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\Create_user.xaml.cs">
+    <Compile Include="CRUD\Create_user.xaml.cs">
       <DependentUpon>Create_user.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Patient_view\Anamnesis.xaml.cs">
+      <DependentUpon>Anamnesis.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Generall.xaml.cs">
       <DependentUpon>Generall.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Login_page.xaml.cs">
       <DependentUpon>Login_page.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Patient_view\Examination.xaml.cs">
+      <DependentUpon>Examination.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Patient_view\Medication_list.xaml.cs">
+      <DependentUpon>Medication_list.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -126,6 +140,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Page Include="CRUD\Update_user.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -134,7 +152,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\Create_user.xaml">
+    <Page Include="CRUD\Create_user.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Patient_view\Anamnesis.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -143,6 +165,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\Login_page.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Patient_view\Examination.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Patient_view\Medication_list.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

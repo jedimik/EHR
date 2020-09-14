@@ -15,6 +15,8 @@ using System.Windows.Shapes;
 using EHR_project.Config;
 using MySql.Data.MySqlClient;
 using System.Diagnostics;
+using EHR_project.Modul;
+using EHR_project.View.Patient_view;
 
 namespace EHR_project
 {
@@ -25,96 +27,67 @@ namespace EHR_project
     {
         private MySqlDataReader reader;
         private Dtbconnect dtb;
-        int address_id = 0;
-        int sex_id = 0;
-        int insurance_id = 0;
-        Dictionary<int, string> insurance = new Dictionary<int, string>();      
-
+        private int patient_examination_id; //Selectem z databaze
+        private List<Medicine> medications = new List<Medicine>();
+        string medication_history;
+        Patient patient;
         public TestPage()
         {
             InitializeComponent();
+            Get_medicine();
+            tb_medication_history.Text = tb_medication_history.Text + DateTime.Now.ToString();
+            
+        }
+
+        private void btn_save_medication_Click(object sender, RoutedEventArgs e)
+        {
+            foreach (var o  in lb_medication_choose.SelectedItems)
+            {  //Napsani do textboxu
+                tb_medication_history.Text = tb_medication_history.Text+ "\n" + o;
+
+                foreach (Medicine medicine in medications)
+                {
+                    if (lb_medication_choose.Items.IndexOf(o)+1 == medicine.id)
+                    { //tady bude insert podle indexu
+                        Debug.Write(medicine.id);
+                    }
+                }
+                
+
+            }
+
+            lb_medication_choose.SelectedItems.Clear();
+        }
+
+        private void Get_medicine()
+        {
             this.dtb = new Dtbconnect();
-            reader = dtb.Select("SELECT * FROM sex");
-            int pocet = 0;
+            reader = dtb.Select("SELECT * FROM medication;");
             while (reader.Read())
             {
-                cb_sex.Items.Insert(pocet, reader.GetString(1));
-                pocet++;
+                medications.Add(new Medicine(reader.GetInt32(0), reader.GetString(1), reader.GetInt32(2), false));
+
             }
-            dtb.CloseConn();
+
+            foreach (var o in medications)
+            {
+                lb_medication_choose.Items.Insert((o.id - 1), o.name); //-1 aby to bylo od nuly                 
+            }
             dtb = null;
         }
-
-        private void register_click(object sender, RoutedEventArgs e)
+        private void Get_medication_history() 
         {
-            try
-            {
-                Get_ids(); //Nastaveni ID pro sex a Insurance
-                string cmd;
-                this.dtb = new Dtbconnect();
-                reader = dtb.Select("SELECT * FROM address WHERE city='" + tb_city.Text + "' AND street_name='" + tb_street_name.Text + "' AND street_number='" + tb_house_number.Text + "';");
-                if (reader.HasRows)
-                {
-                    while (reader.Read())
-                    {
-                        address_id = reader.GetInt32(0);
-                    }
-                }
-                else
-                {
-                    cmd = @"INSERT INTO address
-                (street_name,street_number,city,postal_code)
-                VALUES
-                ('" + tb_street_name.Text + "','" + tb_house_number.Text + "','" + tb_city.Text + "','" + tb_psc.Text + "');";
-                    dtb.Insert(cmd);
-                    this.dtb = new Dtbconnect();
-                    reader = dtb.Select("SELECT * FROM address WHERE city='" + tb_city.Text + "' AND street_name='" + tb_street_name.Text + "' AND street_number='" + tb_house_number.Text + "';");
-                    while (reader.Read())
-                    {
-                        address_id = reader.GetInt32(0);
-                    }
-                }
-                cmd = @"INSERT INTO patient 
-                    (name,surname,sexID,addressID,tel_number,insuranceID)
-                    VALUES
-                ('" + tb_name.Text + "','" + tb_surname.Text + "','" + sex_id + "','" + address_id + "','" + tb_tel_number.Text + "','" + insurance_id + "');";
-
-                dtb.Insert(cmd);
-                string messageBoxText = "Registrace byla úspěšně provedena";
-                string caption = "AIS";
-                MessageBoxButton button = MessageBoxButton.OK;
-                MessageBoxImage icon = MessageBoxImage.None;
-                MessageBox.Show(messageBoxText, caption, button, icon);
-            }
-            catch (Exception ex)
-            {
-                string messageBoxText = "Překontrolujte prosím údaje. Registrace nebyla provedena";
-                string caption = "AIS";
-                MessageBoxButton button = MessageBoxButton.YesNoCancel;
-                MessageBoxImage icon = MessageBoxImage.Warning;
-                MessageBox.Show(messageBoxText, caption, button, icon);
-            }
-            insurance.Clear(); //vycisteni pojisteni
+            this.dtb = new Dtbconnect();
+            reader = dtb.Select("SELECT * FROM medication_link WHERE patientID='"+ patient.id +"';");
+        
         }
 
-        private void Get_ids()
+        private void btn_back_to_anamnesis_Click(object sender, RoutedEventArgs e)
         {
-            sex_id = cb_sex.SelectedIndex+1;//je to od nuly a databaze ID od jedne
-            insurance.Add(1, "111");
-            insurance.Add(2, "201");
-            insurance.Add(3, "205");
-            foreach (KeyValuePair<int, string> pair in insurance)
-            {
-                if (pair.Value == tb_insurance.Text)
-                {
-                    this.insurance_id=pair.Key;
-                }
-            }
-        }
 
-        private void btn_back_to_generall_Click(object sender, RoutedEventArgs e)
-        {
-          //
         }
     }
 }
+
+
+

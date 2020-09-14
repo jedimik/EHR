@@ -20,7 +20,7 @@ namespace EHR_project.Config
 {
     class Dtbconnect
     {
-        static string Mysqlconn = "Server=localhost;Database=ehr;Uid=ehr;Pwd=ehr;";
+        static string Mysqlconn = "Server=localhost;Database=ehr;Uid=ehr;Pwd=ehr;Convert Zero Datetime=True;";
         //List<String> string_list = new List<String>();
         public MySqlConnection connection;
         public MySqlDataReader Select(string command)
@@ -43,25 +43,23 @@ namespace EHR_project.Config
         {
             this.connection.Close();
         }
-        /*
-        public void querry(string command)
+
+        public void Update(string command)
         {
-            MySqlConnection connection = new MySqlConnection(Mysqlconn);
+            this.connection = new MySqlConnection(Mysqlconn);
             MySqlCommand cmd = new MySqlCommand(command, connection);
             connection.Open();
-            reader = cmd.ExecuteReader();
-            if (reader.Read())
-            {                
-                for (int i = 0; i < reader.FieldCount; i++)
-                {
-                    string_list.Add(reader[i].ToString());
-                }
-            }
-            connection.Close();
+            MySqlDataReader reader = cmd.ExecuteReader();
+            CloseConn();
         }
-        public List<String> returnvalue()
+
+        public void Delete(string command)
         {
-            return string_list;
-        }*/
+            this.connection = new MySqlConnection(Mysqlconn);
+            MySqlCommand cmd = new MySqlCommand(command, connection);
+            connection.Open();
+            MySqlDataReader reader = cmd.ExecuteReader();
+            CloseConn();
+        }
     }
 }

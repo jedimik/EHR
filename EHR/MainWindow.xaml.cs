@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using EHR_project.View;
 using EHR_project.Modul;
+using EHR_project.CRUD;
 using System.Diagnostics;
 
 namespace EHR_project
@@ -26,8 +27,8 @@ namespace EHR_project
         public MainWindow()
         {
             InitializeComponent();
-            load_base();
             wmain = this;
+            load_base();
         }
         private static User user_main { get; set; }
         public static Generall gen_main { get; set; }
@@ -36,7 +37,7 @@ namespace EHR_project
         public void load_base()
         {
             //Pro testovani
-            //MainW.Content = new TestPage();
+           // MainW.Content = new TestPage();
             //Main
             lp_main = new Login_page();
             MainW.Content = lp_main;
@@ -49,20 +50,13 @@ namespace EHR_project
             MainW.Content = gen_main;
         }
         public void destroy_everything()
-        {
-         
-                lp_main = null;
-                user_main = null;
-                gen_main = null;
-                string_list.Clear();
-                load_base();
+        {       
+            lp_main = null;
+            user_main = null;
+            gen_main = null;
+           // load_base();
+            wmain.MainW.Content = new Login_page();
 
-        }
-
-        private User returnUser(User user)
-        {
-            user_main = user;
-            return user_main;
         }
 
     }

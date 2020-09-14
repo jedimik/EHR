@@ -14,6 +14,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using EHR_project.Modul;
 using EHR_project.Config;
+using EHR_project.CRUD;
 using MySql.Data.MySqlClient;
 
 namespace EHR_project.View
@@ -23,14 +24,11 @@ namespace EHR_project.View
     /// </summary>
     public partial class Generall : Page
     {
-        public Generall()
-        {
-            InitializeComponent();          
-        }
         private MySqlDataReader reader;
         Dictionary<int, string> patients = new Dictionary<int, string>();
         private User user;
         private Patient patient;
+        public Anamnesis anamnesis;
         public int patient_id;
         public Generall(User user)
         {
@@ -69,41 +67,84 @@ namespace EHR_project.View
             }            
         }
 
-        private void btn_logout_Click(object sender, RoutedEventArgs e)
+        private void btn_logout_Click(object sender, RoutedEventArgs e) //Odlaseni lekare
         {
             MainWindow.wmain.destroy_everything();
         }
-
-        private void click_new_patient(object sender, RoutedEventArgs e)
+        private void btn_new_patient_Click(object sender, RoutedEventArgs e) //ODhlaseni pacienta
         {
             MainWindow.wmain.Content = new Create_user();
         }
-
         private void btn_logout_patient_Click(object sender, RoutedEventArgs e)
         {
             lbl_patient_name.Content = "Aktuální pacient:";
             patient = null;
+            //Visibility buttonu po logout
             cb_patients.Visibility = Visibility.Visible;
             btn_final_choose_patient.Visibility = Visibility.Visible;
             lbl_pick_patient.Visibility = Visibility.Visible;
+            btn_anamnesis.Visibility = Visibility.Hidden;
+            btn_update_patient.Visibility = Visibility.Hidden;
         }
 
         private void btn_final_choose_patient_Click(object sender, RoutedEventArgs e)
         {
             getID(cb_patients.SelectedItem.ToString());
             Dtbconnect dtb = new Dtbconnect();
-            reader = dtb.Select("SELECT * FROM patient WHERE id='"+patient_id+"';");
+            reader = dtb.Select("SELECT " +
+            "patient.name, patient.surname, " +
+            "sex.ID, sex.name, " +
+            "address.ID, address.street_name, address.street_number, address.city, address.postal_code, " +
+            "patient.tel_number," +
+            "insurance.ID, insurance.code, insurance.name " +
+            "FROM patient " +
+            "INNER join sex on sex.id=sexID " +
+            "INNER join address on address.ID=addressID " +
+            "INNER join insurance on insurance.ID=insuranceID " +
+            "WHERE patient.ID='" + patient_id + "';");
             while (reader.Read())
-            {   
-                this.patient = new Patient(reader.GetInt32(0),reader.GetString(1),reader.GetString(2),reader.GetInt32(3),reader.GetInt32(4),reader.GetInt32(5),reader.GetInt32(7));
+            {
+                this.patient = new Patient(patient_id,reader.GetString(0),reader.GetString(1),
+                    reader.GetInt32(2),reader.GetString(3),
+                    reader.GetInt32(4), reader.GetString(5),reader.GetInt32(6), reader.GetString(7), reader.GetInt32(8),
+                    reader.GetInt32(9),
+                    reader.GetInt32(10),reader.GetInt32(11), reader.GetString(12),false);
             }
             dtb.CloseConn();
             dtb = null;
+            this.anamnesis = new Anamnesis(patient); //Aby byla jednou nacetla po loginu
             lbl_patient_name.Content = "Aktuální pacient:" + patient.name +" "+ patient.surname;
+            //Visibility buttonu po login
             cb_patients.Visibility = Visibility.Hidden;
             btn_final_choose_patient.Visibility = Visibility.Hidden;
             lbl_pick_patient.Visibility = Visibility.Hidden;
+            btn_update_patient.Visibility = Visibility.Visible;
+            btn_anamnesis.Visibility = Visibility.Visible;
         }
+
+        private void btn_update_patient_Click(object sender, RoutedEventArgs e)
+        {
+            MainWindow.wmain.Content = new Update_user(patient);
+        }
+
+        private void btn_anamnesis_Click(object sender, RoutedEventArgs e)            
+        {            
+            MainWindow.wmain.Content = anamnesis;
+        }
+        //Test jestli zlepsi
+        public void Return_anamnesis(Anamnesis anamnesis)
+        {
+            this.anamnesis = anamnesis;
+        }
+        public void Return_patient(Patient patient)
+        {
+            this.patient=patient;
+        }
+        public void Return_user(User user)
+        {
+            this.user=user;
+        }
+
     }
 }
 
