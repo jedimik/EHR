@@ -54,9 +54,9 @@ namespace EHR_project
             lp_main = null;
             user_main = null;
             gen_main = null;
-           // load_base();
-            wmain.MainW.Content = new Login_page();
-
+            wmain.Hide();
+            wmain=new MainWindow();
+            wmain.Show();
         }
 
     }
