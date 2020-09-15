@@ -82,12 +82,11 @@
       <DependentUpon>Update_user.xaml</DependentUpon>
     </Compile>
     <Compile Include="Modul\Examination_concrete.cs" />
+    <Compile Include="Modul\Intervention.cs" />
     <Compile Include="Modul\Medicine.cs" />
     <Compile Include="Modul\Patient.cs" />
     <Compile Include="Modul\Patient_examination.cs" />
-    <Compile Include="TestPage.xaml.cs">
-      <DependentUpon>TestPage.xaml</DependentUpon>
-    </Compile>
+    <Compile Include="Modul\Visit.cs" />
     <Compile Include="CRUD\Create_user.xaml.cs">
       <DependentUpon>Create_user.xaml</DependentUpon>
     </Compile>
@@ -103,8 +102,14 @@
     <Compile Include="View\Patient_view\Examination.xaml.cs">
       <DependentUpon>Examination.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\Patient_view\Exam_history.xaml.cs">
+      <DependentUpon>Exam_history.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\Patient_view\Medication_list.xaml.cs">
       <DependentUpon>Medication_list.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Patient_view\Prescripted_medicine.xaml.cs">
+      <DependentUpon>Prescripted_medicine.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -148,10 +153,6 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="TestPage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="CRUD\Create_user.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -172,7 +173,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="View\Patient_view\Exam_history.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\Patient_view\Medication_list.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Patient_view\Prescripted_medicine.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

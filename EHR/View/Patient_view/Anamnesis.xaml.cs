@@ -25,13 +25,17 @@ namespace EHR_project.View
     /// </summary>
     public partial class Anamnesis : Page
     {
-        Patient patient;
-        private string anamnesis;
+        public Examination_concrete examination_concrete;
+        public Medicine medicine;
+        public Intervention intervention;
+        public Patient patient;
         Dtbconnect dtb;
-        MySqlDataReader reader;
-        string today;
+        public MySqlDataReader reader;
         public Examination exam;
-        Medication_list medication_list;
+        public Exam_history exam_history;
+
+        string today;
+        private string anamnesis;
         public int examination_id { get; set; } //id exam pro leky
         public Anamnesis(Patient patient)
         {
@@ -39,37 +43,22 @@ namespace EHR_project.View
             this.patient = patient;
             lbl_patient_name.Content = MainWindow.gen_main.lbl_patient_name.Content;
             load_anamnesis();
-            this.today = DateTime.Today.ToString("yyy/MM/dd");
-            this.exam = new Examination(patient,today);
+            this.exam = new Examination(patient);
         }
 
         private void load_anamnesis()
         {
             this.dtb = new Dtbconnect();
-            reader = dtb.Select("SELECT anamnesis FROM patient WHERE id='" + patient.id + "';");
-            if (reader.Read())
+            reader = dtb.Select("SELECT examination.today_examination " +
+                "FROM visit " +
+                "INNER JOIN examination on visit.examinationID=examination.id " +
+                "WHERE patientID='"+patient.id+"';");
+            while (reader.Read())
             {
                 anamnesis = reader.GetString(0);
+                tb_anamnesis.Text += anamnesis + "\n\n";
             }
-            if (patient.patient_anamnesis == false) //Jen jedno datum k jedne navsteve, moci dopisovat.
-            {
-                tb_anamnesis.Text = anamnesis;
-                patient.patient_anamnesis = true;
-            }
-            else {
-                tb_anamnesis.Text = anamnesis;
-                    }
-            dtb = null;
-        }
 
-        public void load_examination(string examination)
-        {
-            tb_anamnesis.Text = anamnesis + "\n" + examination + "\n";
-        }
-
-        public void Add_to_anamnesis(string content)
-        {
-            tb_anamnesis.Text = tb_anamnesis.Text +"\n" + content + "\n";
         }
 
         private void btn_back_to_generall_Click(object sender, RoutedEventArgs e)
@@ -78,23 +67,11 @@ namespace EHR_project.View
             MainWindow.wmain.Content = MainWindow.gen_main;
         }     
 
-        private void btn_save_anamnesis_Click(object sender, RoutedEventArgs e)
-        {
-            anamnesis = tb_anamnesis.Text;
-            this.dtb = new Dtbconnect();
-            dtb.Update("UPDATE patient SET anamnesis='"+anamnesis+"' WHERE id='"+ patient.id+"';");
-        }
-
         private void btn_examination_Click(object sender, RoutedEventArgs e)
         {
             MainWindow.wmain.Content = exam;
         }
 
-        private void btn_medication_Click(object sender, RoutedEventArgs e)
-        {
-            this.medication_list = new Medication_list(patient);
-            MainWindow.wmain.Content = medication_list;
-        }
         public void Return_examination(Examination exam)
         {
             this.exam = exam;
@@ -110,6 +87,13 @@ namespace EHR_project.View
             }
 
             return examination_id;
+        }
+
+        private void btn_history_exam_Click(object sender, RoutedEventArgs e)
+        {
+            this.exam_history = new Exam_history(patient);
+           MainWindow.wmain.Content = exam_history;
+
         }
     }
 }

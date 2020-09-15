@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Počítač: 127.0.0.1
--- Vytvořeno: Pon 14. zář 2020, 19:41
+-- Vytvořeno: Stř 16. zář 2020, 01:32
 -- Verze serveru: 10.4.11-MariaDB
 -- Verze PHP: 7.4.4
 
@@ -49,7 +49,8 @@ INSERT INTO `address` (`ID`, `street_name`, `street_number`, `city`, `postal_cod
 (12, 'Nová', 2659, 'Opava', 23564),
 (13, 'Váňova', 3226, 'Kladno', 27201),
 (14, 'Váňova', 3227, 'Kladno', 27201),
-(19, 'Nová', 2635, 'Ústí nad Labem', 26501);
+(19, 'Nová', 2635, 'Ústí nad Labem', 26501),
+(20, 'V zahradach', 2736, 'Kutna Hora', 12365);
 
 -- --------------------------------------------------------
 
@@ -59,14 +60,12 @@ INSERT INTO `address` (`ID`, `street_name`, `street_number`, `city`, `postal_cod
 
 CREATE TABLE `examination` (
   `ID` int(11) NOT NULL,
-  `patientID` int(16) NOT NULL,
   `weight` double NOT NULL,
   `height` double NOT NULL,
   `pressure_dis` int(8) NOT NULL,
   `pressure_sys` int(8) NOT NULL,
   `saturation` int(2) NOT NULL,
   `BPM` int(11) NOT NULL,
-  `date` date NOT NULL,
   `today_examination` mediumtext NOT NULL,
   `exam_code_ID` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -75,15 +74,16 @@ CREATE TABLE `examination` (
 -- Vypisuji data pro tabulku `examination`
 --
 
-INSERT INTO `examination` (`ID`, `patientID`, `weight`, `height`, `pressure_dis`, `pressure_sys`, `saturation`, `BPM`, `date`, `today_examination`, `exam_code_ID`) VALUES
-(1, 22, 86, 195, 67, 120, 93, 99, '2020-09-23', 'Dne:11.09.2020 17:31:19 Váha=86 Výška=195 BMI= 22,6166995397765\nDiastolický tlak= 67 Systolický tlak= 120 Saturace= 93\nDnešní vyšetření:', 10),
-(2, 26, 75, 186, 98, 125, 94, 89, '2020-09-17', 'Dne:11.09.2020 17:37:56 Váha=75 Výška=186 BMI= 21,6788067984738\nDiastolický tlak= 98 Systolický tlak= 125 Saturace= 94\nDnešní vyšetření:Dnes prisel pacient blabla je mu blabla aha.', 10),
-(8, 22, 755, 75, 75, 75, 75, 58, '2020-02-19', 'Dne:12.00.2020 Váha=755 Výška=75 BMI= 1342,22222222222\nDiastolický tlak= 75 Systolický tlak= 75 Saturace= 75\nDnešní vyšetření:hjhj', 10),
-(12, 22, 45, 45, 45, 45, 45, 45, '2020-09-12', 'Dne:2020.09.12 Váha=45 Výška=45 BMI= 222,222222222222\nDiastolický tlak= 45 Systolický tlak= 45 Saturace= 45\nDnešní vyšetření:sfasf', 10),
-(13, 22, 187, 54, 87, 120, 96, 85, '2020-09-12', 'Dne:2020.09.12 Váha=187 Výška=54 BMI= 641,289437585734\nDiastolický tlak= 87 Systolický tlak= 120 Saturace= 96\nDnešní vyšetření:Dnes je mu lepe', 10),
-(14, 22, 789, 79, 79, 79, 79, 89, '2020-09-12', 'Dne:2020.09.12 Váha=789 Výška=79 BMI= 1264,22047748758\nDiastolický tlak= 79 Systolický tlak= 79 Saturace= 79\nDnešní vyšetření:Je to naprd', 10),
-(15, 26, 46, 466, 54, 16, 13, 95, '2020-09-12', 'Dne:2020.09.12 Váha=46 Výška=466 BMI= 2,1182928401702\nDiastolický tlak= 54 Systolický tlak= 16 Saturace= 13\nDnešní vyšetření:testuju', 14),
-(16, 22, 89, 48, 45, 24, 95, 64, '2020-09-12', 'Dne:2020.09.12 Váha=89 Výška=48 BMI= 386,284722222222\nDiastolický tlak= 45 Systolický tlak= 24 Saturace= 95\nDnešní vyšetření:Je to mongol.', 14);
+INSERT INTO `examination` (`ID`, `weight`, `height`, `pressure_dis`, `pressure_sys`, `saturation`, `BPM`, `today_examination`, `exam_code_ID`) VALUES
+(2, 88, 195, 95, 145, 98, 89, 'Dne:11.09.2020 17:37:56 Váha=85 Výška=195 BMI= 23,1426692965155\r\nDiastolický tlak= 95 Systolický tlak= 145 Saturace= 94\r\nIntervence:\r\nVyšetření:Dnes prisel pacient blabla je mu blabla aha.', 12),
+(13, 86, 175, 94, 123, 92, 112, 'Dne:12.09.2020 0:00:00 Váha=86 Výška=175 BMI= 28,0816326530612\nDiastolický tlak= 94 Systolický tlak= 123 Saturace= 92BPM:112\nIntervence:Vyšetření:Dnes je mu hodne', 14),
+(17, 82, 184, 67, 120, 95, 89, 'Dne:19.09.2020 0:00:00 Váha=82 Výška=184 BMI= 24,2202268431002\nDiastolický tlak= 67 Systolický tlak= 120 Saturace= 95\nIntervence: Odběr plodové vody Vyšetření: TEstovaci vysetreni nove', 14),
+(18, 102, 187, 87, 112, 93, 99, 'Dne:18.09.2020 0:00:00 Váha=102 Výška=187 BMI= 29,1686922702965\nDiastolický tlak= 87 Systolický tlak= 112 Saturace= 93\nIntervence: EEG vyšetření Vyšetření: Testujeme hnusny datum, ktere stale blbne.', 11),
+(19, 89, 176, 68, 130, 94, 59, 'Dne:19.09.2020 0:00:00 Váha=89 Výška=176 BMI= 28,7319214876033\nDiastolický tlak= 68 Systolický tlak= 130 Saturace= 94\nIntervence: EEG vyšetření Diagnoza: Asthma NS\nVyšetření: Neco', 11),
+(20, 100, 180, 87, 130, 94, 95, 'Dne:25.09.2020 0:00:00 Váha=100 Výška=180 BMI= 30,8641975308642\nDiastolický tlak= 87 Systolický tlak= 130 Saturace= 94BPM:95\nIntervence:Odběr plodové vodyVyšetření: Dnes k nam na kliniku prisla tato dama, z vysledku z odberu plodove vody ma jeji plod trizomii 21. chromozomu.', 11),
+(21, 87, 192, 45, 100, 24, 56, 'Dne:07.09.2020 0:00:00 Váha=87 Výška=192 BMI= 23,6002604166667\nDiastolický tlak= 45 Systolický tlak= 100 Saturace= 24BPM:56\nIntervence:EEG vyšetřeníVyšetření:Test \n', 11),
+(22, 87, 192, 45, 100, 24, 56, 'Dne:07.09.2020 0:00:00 Váha=87 Výška=192 BMI= 23,6002604166667\nDiastolický tlak= 45 Systolický tlak= 100 Saturace= 24\nIntervence: EEG vyšetření Diagnoza: Infekce Salmonelami NS\nVyšetření: Test test i leku\nPacientovi jsou předepsané následující léčiva: LORATADIN RATIOPHARM, IBUPROFEN , \n', 13),
+(23, 101, 195, 87, 110, 95, 65, 'Dne:01.09.2020 0:00:00 Váha=101 Výška=195 BMI= 26,5614727153189\nDiastolický tlak= 87 Systolický tlak= 110 Saturace= 95\nIntervence: EEG vyšetření Diagnoza: Chřipka způsobená identifikovaným sezónním chřipkovým virem\nVyšetření: Finalni vysetreniPacientovi jsou předepsané následující léčiva: STOPEX NA SUCHÝ KAŠEL, CODEIN SLOVAKOFARMA, ', 12);
 
 -- --------------------------------------------------------
 
@@ -135,6 +135,29 @@ INSERT INTO `insurance` (`ID`, `code`, `name`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Struktura tabulky `intervention`
+--
+
+CREATE TABLE `intervention` (
+  `ID` int(11) NOT NULL,
+  `name` varchar(64) NOT NULL,
+  `snomed_code` varchar(16) NOT NULL,
+  `loinc_code` varchar(16) NOT NULL,
+  `mkn10_code` varchar(16) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Vypisuji data pro tabulku `intervention`
+--
+
+INSERT INTO `intervention` (`ID`, `name`, `snomed_code`, `loinc_code`, `mkn10_code`) VALUES
+(1, 'Odběr vzorku krve', '119297000', '66746-9', 'Y84.7'),
+(2, 'EEG vyšetření', '54550000', 'LP6239-0', 'R94'),
+(3, 'Odběr plodové vody', '119373006', '29253-2', 'O41.9');
+
+-- --------------------------------------------------------
+
+--
 -- Struktura tabulky `medication`
 --
 
@@ -162,23 +185,29 @@ INSERT INTO `medication` (`ID`, `name`, `sukl_code`) VALUES
 --
 
 CREATE TABLE `medication_link` (
-  `patientID` int(11) NOT NULL,
   `medicationID` int(11) NOT NULL,
-  `examinationID` int(11) NOT NULL
+  `visitID` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Vypisuji data pro tabulku `medication_link`
 --
 
-INSERT INTO `medication_link` (`patientID`, `medicationID`, `examinationID`) VALUES
-(26, 2, 2),
-(22, 3, 2),
-(22, 3, 12),
-(22, 5, 12),
-(22, 2, 12),
-(22, 2, 12),
-(22, 1, 12);
+INSERT INTO `medication_link` (`medicationID`, `visitID`) VALUES
+(3, 1),
+(3, 2),
+(2, 2),
+(1, 2),
+(4, 2),
+(4, 1),
+(1, 1),
+(1, 6),
+(2, 6),
+(4, 6),
+(3, 7),
+(4, 7),
+(5, 9),
+(1, 9);
 
 -- --------------------------------------------------------
 
@@ -193,7 +222,6 @@ CREATE TABLE `patient` (
   `sexID` int(11) NOT NULL,
   `addressID` int(8) NOT NULL,
   `tel_number` int(16) NOT NULL,
-  `anamnesis` mediumtext NOT NULL,
   `insuranceID` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -201,9 +229,10 @@ CREATE TABLE `patient` (
 -- Vypisuji data pro tabulku `patient`
 --
 
-INSERT INTO `patient` (`ID`, `name`, `surname`, `sexID`, `addressID`, `tel_number`, `anamnesis`, `insuranceID`) VALUES
-(22, 'Antonín', 'Němeček', 1, 12, 65326546, '\n11.09.2020 16:08:37\nDnesni zaznam\nDne:11.09.2020 17:02:22 Váha=85 Výška=178 BMI= 0,00268274207802045\nDiastolický tlak= 89 Systolický tlak= 110 Saturace= 93\n Dnešní vyšetření:\n\nDne:2020.09.12 Váha=187 Výška=54 BMI= 641,289437585734\nDiastolický tlak= 87 Systolický tlak= 120 Saturace= 96\nDnešní vyšetření:Dnes je mu lepe\n\nPacientovi jsou předepsané následující léčiva: LORATADIN RATIOPHARM, STOPEX NA SUCHÝ KAŠEL, \n\nDne:2020.09.12 Váha=789 Výška=79 BMI= 1264,22047748758\nDiastolický tlak= 79 Systolický tlak= 79 Saturace= 79\nDnešní vyšetření:Je to naprd\n\nPacientovi jsou předepsané následující léčiva: DIAZEPAM SLOVAKOFARMA, \n\nDne:2020.09.12 Váha=89 Výška=48 BMI= 386,284722222222\nDiastolický tlak= 45 Systolický tlak= 24 Saturace= 95\nDnešní vyšetření:Je to mongol.\n\nPacientovi jsou předepsané následující léčiva: DIAZEPAM SLOVAKOFARMA, CODEIN SLOVAKOFARMA, \n', 1),
-(26, 'Karel', 'Novák', 1, 10, 72564126, 'Karel Novák se dostavil v ranních hodinách se zdravotními problémy. Bolelo ho břicho. Dopporučuji jej poslat na sono, abychom mohli zjistit více.\n11.09.2020 16:03:52\nTest data navstevy.\n11.09.2020 16:07:37\nTest dva', 1);
+INSERT INTO `patient` (`ID`, `name`, `surname`, `sexID`, `addressID`, `tel_number`, `insuranceID`) VALUES
+(22, 'Antonín', 'Němeček', 1, 12, 65326546, 1),
+(26, 'Karel', 'Novák', 1, 10, 72564126, 1),
+(31, 'Helena', 'Novakova', 2, 20, 456456987, 1);
 
 -- --------------------------------------------------------
 
@@ -245,6 +274,34 @@ CREATE TABLE `user_staff` (
 INSERT INTO `user_staff` (`ID`, `nickname`, `pwd`, `name`, `surname`) VALUES
 (1, 'test', 'heslo', 'Petr', 'Pavel');
 
+-- --------------------------------------------------------
+
+--
+-- Struktura tabulky `visit`
+--
+
+CREATE TABLE `visit` (
+  `ID` int(11) NOT NULL,
+  `examinationID` int(11) NOT NULL,
+  `interventionID` int(11) NOT NULL,
+  `patientID` int(11) NOT NULL,
+  `date` date NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Vypisuji data pro tabulku `visit`
+--
+
+INSERT INTO `visit` (`ID`, `examinationID`, `interventionID`, `patientID`, `date`) VALUES
+(1, 13, 1, 26, '2020-09-12'),
+(2, 2, 1, 22, '2020-09-11'),
+(4, 18, 2, 26, '2020-09-18'),
+(5, 19, 2, 22, '2020-09-19'),
+(6, 20, 3, 31, '2020-09-25'),
+(7, 21, 2, 31, '2020-09-07'),
+(8, 22, 2, 31, '2020-09-07'),
+(9, 23, 2, 26, '2020-09-01');
+
 --
 -- Klíče pro exportované tabulky
 --
@@ -260,7 +317,6 @@ ALTER TABLE `address`
 --
 ALTER TABLE `examination`
   ADD PRIMARY KEY (`ID`),
-  ADD KEY `patientID` (`patientID`),
   ADD KEY `exam_code` (`exam_code_ID`);
 
 --
@@ -276,6 +332,12 @@ ALTER TABLE `insurance`
   ADD PRIMARY KEY (`ID`);
 
 --
+-- Klíče pro tabulku `intervention`
+--
+ALTER TABLE `intervention`
+  ADD PRIMARY KEY (`ID`);
+
+--
 -- Klíče pro tabulku `medication`
 --
 ALTER TABLE `medication`
@@ -285,9 +347,8 @@ ALTER TABLE `medication`
 -- Klíče pro tabulku `medication_link`
 --
 ALTER TABLE `medication_link`
-  ADD KEY `patientID` (`patientID`),
   ADD KEY `medicationID` (`medicationID`),
-  ADD KEY `examinationID` (`examinationID`);
+  ADD KEY `examinationID` (`visitID`);
 
 --
 -- Klíče pro tabulku `patient`
@@ -312,6 +373,15 @@ ALTER TABLE `user_staff`
   ADD UNIQUE KEY `nickname` (`nickname`);
 
 --
+-- Klíče pro tabulku `visit`
+--
+ALTER TABLE `visit`
+  ADD PRIMARY KEY (`ID`),
+  ADD KEY `examinationID` (`examinationID`),
+  ADD KEY `interventionID` (`interventionID`),
+  ADD KEY `patientID` (`patientID`);
+
+--
 -- AUTO_INCREMENT pro tabulky
 --
 
@@ -319,13 +389,13 @@ ALTER TABLE `user_staff`
 -- AUTO_INCREMENT pro tabulku `address`
 --
 ALTER TABLE `address`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- AUTO_INCREMENT pro tabulku `examination`
 --
 ALTER TABLE `examination`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 
 --
 -- AUTO_INCREMENT pro tabulku `examination_codes`
@@ -340,6 +410,12 @@ ALTER TABLE `insurance`
   MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
+-- AUTO_INCREMENT pro tabulku `intervention`
+--
+ALTER TABLE `intervention`
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
 -- AUTO_INCREMENT pro tabulku `medication`
 --
 ALTER TABLE `medication`
@@ -349,7 +425,7 @@ ALTER TABLE `medication`
 -- AUTO_INCREMENT pro tabulku `patient`
 --
 ALTER TABLE `patient`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
 
 --
 -- AUTO_INCREMENT pro tabulku `sex`
@@ -364,6 +440,12 @@ ALTER TABLE `user_staff`
   MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
+-- AUTO_INCREMENT pro tabulku `visit`
+--
+ALTER TABLE `visit`
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+
+--
 -- Omezení pro exportované tabulky
 --
 
@@ -371,7 +453,6 @@ ALTER TABLE `user_staff`
 -- Omezení pro tabulku `examination`
 --
 ALTER TABLE `examination`
-  ADD CONSTRAINT `examination_ibfk_1` FOREIGN KEY (`patientID`) REFERENCES `patient` (`ID`),
   ADD CONSTRAINT `examination_ibfk_2` FOREIGN KEY (`exam_code_ID`) REFERENCES `examination_codes` (`ID`);
 
 --
@@ -379,8 +460,7 @@ ALTER TABLE `examination`
 --
 ALTER TABLE `medication_link`
   ADD CONSTRAINT `medication_link_ibfk_1` FOREIGN KEY (`medicationID`) REFERENCES `medication` (`ID`),
-  ADD CONSTRAINT `medication_link_ibfk_2` FOREIGN KEY (`patientID`) REFERENCES `patient` (`ID`),
-  ADD CONSTRAINT `medication_link_ibfk_3` FOREIGN KEY (`examinationID`) REFERENCES `examination` (`ID`);
+  ADD CONSTRAINT `medication_link_ibfk_3` FOREIGN KEY (`visitID`) REFERENCES `visit` (`ID`);
 
 --
 -- Omezení pro tabulku `patient`
@@ -389,6 +469,14 @@ ALTER TABLE `patient`
   ADD CONSTRAINT `patient_ibfk_1` FOREIGN KEY (`addressID`) REFERENCES `address` (`ID`),
   ADD CONSTRAINT `patient_ibfk_2` FOREIGN KEY (`insuranceID`) REFERENCES `insurance` (`ID`),
   ADD CONSTRAINT `patient_ibfk_3` FOREIGN KEY (`sexID`) REFERENCES `sex` (`ID`);
+
+--
+-- Omezení pro tabulku `visit`
+--
+ALTER TABLE `visit`
+  ADD CONSTRAINT `visit_ibfk_1` FOREIGN KEY (`examinationID`) REFERENCES `examination` (`ID`),
+  ADD CONSTRAINT `visit_ibfk_2` FOREIGN KEY (`interventionID`) REFERENCES `intervention` (`ID`),
+  ADD CONSTRAINT `visit_ibfk_4` FOREIGN KEY (`patientID`) REFERENCES `patient` (`ID`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
