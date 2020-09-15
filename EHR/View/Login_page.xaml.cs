@@ -35,7 +35,7 @@ namespace EHR_project.View
         {
             lblErrorLP.Content = ""; //nulovani erroru
             nickname = tbUsrName.Text;
-            pwd = tbUsrPwd.Text;
+            pwd = tbUsrPwd.Password;
 
             Dtbconnect dtb = new Dtbconnect();
             string cmd = "SELECT id,name,surname FROM user_staff WHERE nickname='" + nickname + "' AND pwd='" + pwd + "';";

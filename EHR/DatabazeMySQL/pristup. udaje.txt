@@ -1,0 +1,3 @@
+Vytvoren textovaci profil lekare 	jmeno:test
+					heslo:heslo
+profil lekare je v tabulce user_staff.
