@@ -15,9 +15,8 @@ namespace EHR_project.Modul
         public int saturation { get; set; }
         public int bpm { get; set; }
         public string examination { get; set; }      
-        public int examination_code { get; set; }
 
-        public Patient_examination( double weight, double height, int pressure_dis, int pressure_sys, int saturation, int bpm, string examination, int examination_code)
+        public Patient_examination( double weight, double height, int pressure_dis, int pressure_sys, int saturation, int bpm, string examination)
         {
             this.weight = weight;
             this.height = height;
@@ -26,7 +25,6 @@ namespace EHR_project.Modul
             this.saturation = saturation;
             this.bpm = bpm;
             this.examination = examination;
-            this.examination_code = examination_code;
         }
 
 

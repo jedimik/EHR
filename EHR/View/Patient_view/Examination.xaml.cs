@@ -28,7 +28,7 @@ namespace EHR_project.View.Patient_view
         Patient_examination patient_exam;
         Medication_list medication_list;
         private string examination="";
-        private int examination_code; //predelat
+        List<int> examination_code_ids = new List<int>(); //predelat
         private string examination_text;
         public int intervention_id { get; set; }
         public int examination_id { get; set; }
@@ -92,8 +92,8 @@ namespace EHR_project.View.Patient_view
                     {
                         if (lb_diagnosis.Items.IndexOf(o)  == exc.idpocet)
                         {
-                            examination_code = exc.id;
-                            examination_name = exc.name;
+                            examination_code_ids.Add(exc.id);
+                            examination_name += exc.name+", ";
                         }
                     }
                 }
@@ -113,7 +113,7 @@ namespace EHR_project.View.Patient_view
                 var date= Convert.ToDateTime(dp_date.Text).ToString("yyyy/MM/dd");
                 datetime = dp_date.SelectedDate.Value;
                 this.patient_exam = new Patient_examination(Double.Parse(tb_weight.Text), Double.Parse(tb_height.Text), Int32.Parse(tb_pressure_dis.Text),
-                    Int32.Parse(tb_pressure_sys.Text), Int32.Parse(tb_saturation.Text), Int32.Parse(tb_bpm.Text), examination, examination_code);
+                    Int32.Parse(tb_pressure_sys.Text), Int32.Parse(tb_saturation.Text), Int32.Parse(tb_bpm.Text), examination);
                 examination_text = tb_examination.Text;
 
                 double BMI = Double.Parse(tb_weight.Text) / (Double.Parse(tb_height.Text) / 100 * Double.Parse(tb_height.Text) / 100);
@@ -125,19 +125,24 @@ namespace EHR_project.View.Patient_view
                 patient_exam.examination = examination;
                 this.dtb = new Dtbconnect();
                 dtb.Insert("INSERT INTO examination (weight, height, pressure_dis, pressure_sys, saturation" +
-                    ", BPM, today_examination, exam_code_ID)" +
+                    ", BPM, today_examination)" +
                     " VALUES ('" + patient_exam.weight + "','" + patient_exam.height + "','" + patient_exam.pressure_dis + "','" + patient_exam.pressure_sys + "'," +
-                    "'" + patient_exam.saturation + "','" + patient_exam.bpm  + "','" + patient_exam.examination + "','" + examination_code + "');");                             
+                    "'" + patient_exam.saturation + "','" + patient_exam.bpm  + "','" + patient_exam.examination + "');");                             
                 //Nefunguje get Last inserted ID proto tak osklive
                 reader=dtb.Select("SELECT id FROM examination WHERE weight='"+ patient_exam.weight +"' AND height='"+ patient_exam.height+"' AND pressure_dis='"+ patient_exam.pressure_dis+"'" +
                     " AND pressure_sys='"+ patient_exam.pressure_sys+"' AND saturation='"+ patient_exam.saturation+"' AND BPM='"+patient_exam.bpm+"' AND " +
-                    "today_examination='"+ patient_exam.examination+ "' AND exam_code_ID='"+ examination_code +"';");
+                    "today_examination='"+ patient_exam.examination+ "';");
                 while (reader.Read())
                 {
                     examination_id = reader.GetInt32(0);
                 }
                 dtb.Insert("INSERT INTO visit (examinationID, interventionID, patientID, date) " +
                     "VALUES ('" + examination_id + "','" + intervention_id + "','" + patient.id + "','" + date + "')");
+
+                for (int i=0; i < examination_code_ids.Count; i++)
+                {
+                    dtb.Insert("INSERT INTO examination_link (examinationID, examination_codeID) VALUES ('"+examination_id+"','"+examination_code_ids[i]+"');");
+                }
 
                 string messageBoxText = "Vysetreni ulozeno.";
                 string caption = "AIS";
@@ -176,5 +181,6 @@ namespace EHR_project.View.Patient_view
             help += content;
             dtb.Update("UPDATE examination SET today_examination='" + help + "' WHERE id='" + examination_id + "';");            
         }
+
     }
 }

@@ -33,6 +33,8 @@ namespace EHR_project.View.Patient_view
         List<Visit> visits = new List<Visit>();
         List<Examination_concrete> examinations = new List<Examination_concrete>(); //seznam exam
         List<Intervention> interventions = new List<Intervention>(); //seznam interv
+        List<int> examination_code_ids = new List<int>();
+        List<int> examination_code_ids_original = new List<int>();
 
         private string cmd;
         int ex_id;
@@ -85,7 +87,7 @@ namespace EHR_project.View.Patient_view
             while (reader.Read())
             {
                 this.patient_examination = new Patient_examination(reader.GetDouble(1),reader.GetDouble(2),reader.GetInt32(3),reader.GetInt32(4),reader.GetInt32(5)
-                    ,reader.GetInt32(6),reader.GetString(7),reader.GetInt32(8));
+                    ,reader.GetInt32(6),reader.GetString(7));
             }
             tb_weight.Text = patient_examination.weight.ToString();
             tb_height.Text = patient_examination.height.ToString();
@@ -95,14 +97,25 @@ namespace EHR_project.View.Patient_view
             tb_bpm.Text = patient_examination.bpm.ToString();
             tb_examination.Text = patient_examination.examination;
             LoadInterventions();
-            LoadExaminations(); 
+            LoadExaminations();
+            this.dtb = new Dtbconnect();
+            reader =dtb.Select("SELECT examination_codeID FROM examination_link WHERE examinationID='"+ visit.examination_id + "';");
+            while (reader.Read())
+            {
+                examination_code_ids_original.Add(reader.GetInt32(0));
+            }
+
             foreach (Examination_concrete exc in examinations)
             {
-                if (exc.id == visit.examination_id)
+                foreach (var o in examination_code_ids_original)
                 {
-                    lb_diagnosis.SelectedItem = lb_diagnosis.Items.GetItemAt(exc.idpocet);
+                    if (o == exc.id)
+                    {
+                        lb_diagnosis.SelectedItems.Add(lb_diagnosis.Items.GetItemAt(exc.idpocet));
+                    }
                 }
             }
+
             foreach (Intervention inter in interventions)
             {
                 if (inter.id == visit.intervention_id)
@@ -110,6 +123,8 @@ namespace EHR_project.View.Patient_view
                    lb_intervence.SelectedItem = lb_intervence.Items.GetItemAt(inter.id_pocet);
                 }
             }
+
+
         }
 
         private void btn_delete_Click(object sender, RoutedEventArgs e)
@@ -128,21 +143,21 @@ namespace EHR_project.View.Patient_view
             this.dtb = new Dtbconnect();
             dtb.Delete("DELETE FROM medication_link WHERE visitID='" + visit.id + "';");
             dtb.Delete("DELETE FROM examination WHERE id='" + visit.examination_id + "';");
+            dtb.Delete("DELETE FROM examination_link WHERE examinationID='" + visit.examination_id + "';");
             dtb.Delete("DELETE FROM visit WHERE id='" + visit.id + "';");
-            string messageBoxText = "Zaznam vymazan.";
+            string messageBoxText = "Zaznam vymazan";
             string caption = "AIS";
             MessageBoxButton button = MessageBoxButton.OK;
             MessageBoxImage icon = MessageBoxImage.Information;
             MessageBox.Show(messageBoxText, caption, button, icon);
             dtb = null;
             visit = null;
-            
         }
 
         private void btn_save_examination_Click(object sender, RoutedEventArgs e)
         {
-           try
-            {//Pro TB a vysetreni
+          // try
+           // {//Pro TB a vysetreni
                 if (Double.Parse(tb_weight.Text) != patient_examination.weight || Double.Parse(tb_height.Text) != patient_examination.height ||
                     Int32.Parse(tb_pressure_sys.Text) != patient_examination.pressure_sys || Int32.Parse(tb_pressure_dis.Text) != patient_examination.pressure_dis ||
                     Int32.Parse(tb_saturation.Text) != patient_examination.saturation || Int32.Parse(tb_bpm.Text) != patient_examination.bpm ||
@@ -164,19 +179,19 @@ namespace EHR_project.View.Patient_view
                 //Pro listboxy
                 //Diagnozy
                 foreach (var o in lb_diagnosis.SelectedItems)
-                {  //Napsani do textboxu
+                {  
                     foreach (Examination_concrete exc in examinations)
                     {
                         if (lb_diagnosis.Items.IndexOf(o) == exc.idpocet)
                         {
-                            ex_id = exc.id;
-                            examination_name = exc.name;
+                            examination_code_ids.Add(exc.id);
+                            examination_name += exc.name+", ";
                         }
                     }
                 }
                 //Intervence
                 foreach (var o in lb_intervence.SelectedItems)
-                {  //Napsani do textboxu
+                {  
                     foreach (Intervention inter in interventions)
                     {
                         if (lb_intervence.Items.IndexOf(o) == inter.id_pocet)
@@ -186,12 +201,27 @@ namespace EHR_project.View.Patient_view
                         }
                     }
                 }
-            
-            if (ex_id != patient_examination.examination_code)
-            {
-                this.dtb = new Dtbconnect();
-                dtb.Update("UPDATE examination SET exam_code_ID='" + ex_id + "' WHERE examination.id='"+ visit.examination_id+"';");
-            }
+
+            //Examination_link
+                bool mazane = false;
+                for (int i=0;i<examination_code_ids.Count;i++)
+                {               
+                    if (!examination_code_ids_original.Contains(examination_code_ids[i]))
+                    {                       
+                        if (mazane == false)
+                        {
+                            dtb.Delete("DELETE FROM examination_link WHERE examinationID='" + visit.examination_id + "';");
+                            mazane = true;
+                            dtb.Insert("INSERT INTO examination_link (examinationID, examination_codeID) VALUES ('" + visit.examination_id + "','" + examination_code_ids[i] + "');");
+                        }
+                        else {
+                            dtb.Insert("INSERT INTO examination_link (examinationID, examination_codeID) VALUES ('" + visit.examination_id + "','" + examination_code_ids[i] + "');");
+                        }
+                    }                        
+                }
+                    
+                
+
             if (int_id != visit.intervention_id)
             {
                 this.dtb = new Dtbconnect();
@@ -204,15 +234,15 @@ namespace EHR_project.View.Patient_view
               MessageBoxImage icon = MessageBoxImage.Information;
               MessageBox.Show(messageBoxText, caption, button, icon);
           }
-          catch (Exception ex)
+          /*catch (Exception ex)
           {
               string messageBoxText = "Prekontrolujte prosim data, nekde se stala chyba.";
               string caption = "AIS";
               MessageBoxButton button = MessageBoxButton.OK;
               MessageBoxImage icon = MessageBoxImage.Warning;
               MessageBox.Show(messageBoxText, caption, button, icon);
-          }
-        }
+          }}*/
+        
 
         private void btn_medication_Click(object sender, RoutedEventArgs e)
         {

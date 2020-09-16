@@ -26,7 +26,7 @@
         <Label Content="BPM" HorizontalAlignment="Left" Margin="396,64,0,0" VerticalAlignment="Top"/>
         <TextBox x:Name="tb_bpm" HorizontalAlignment="Left" Height="23" Margin="449,67,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
         <Button x:Name="btn_save_examination" Content="Uložit změny" HorizontalAlignment="Left" Margin="130,12,0,0" VerticalAlignment="Top" Width="92" Height="23" Click="btn_save_examination_Click"/>
-        <ListBox x:Name="lb_diagnosis" HorizontalAlignment="Left" Height="76" Margin="417,241,0,0" VerticalAlignment="Top" Width="277" SelectionMode="Single"/>
+        <ListBox x:Name="lb_diagnosis" HorizontalAlignment="Left" Height="76" Margin="417,241,0,0" VerticalAlignment="Top" Width="277" SelectionMode="Multiple"/>
         <Label Content="Diagnózy" HorizontalAlignment="Left" Margin="417,210,0,0" VerticalAlignment="Top" FontWeight="Bold"/>
         <ListBox x:Name="lb_intervence" HorizontalAlignment="Left" Height="72" Margin="417,122,0,0" VerticalAlignment="Top" Width="277"/>
         <Label Content="Vyšetření" HorizontalAlignment="Left" Margin="417,96,0,0" VerticalAlignment="Top" FontWeight="Bold"/>
