@@ -113,7 +113,7 @@ namespace EHR_project.View.Patient_view
         }
 
         private void btn_delete_Click(object sender, RoutedEventArgs e)
-        {/* 
+        {
             foreach (var o in lb_visits.SelectedItems)
             {
                 foreach (Visit vis in visits)
@@ -126,16 +126,17 @@ namespace EHR_project.View.Patient_view
             }
 
             this.dtb = new Dtbconnect();
-            dtb.Delete("DELETE FROM visit WHERE id='" + visit.id + "';");
+            dtb.Delete("DELETE FROM medication_link WHERE visitID='" + visit.id + "';");
             dtb.Delete("DELETE FROM examination WHERE id='" + visit.examination_id + "';");
-            string messageBoxText = "Nezapomente manualne odmazat anamnezu z tohoto dne.";
+            dtb.Delete("DELETE FROM visit WHERE id='" + visit.id + "';");
+            string messageBoxText = "Zaznam vymazan.";
             string caption = "AIS";
             MessageBoxButton button = MessageBoxButton.OK;
             MessageBoxImage icon = MessageBoxImage.Information;
             MessageBox.Show(messageBoxText, caption, button, icon);
             dtb = null;
             visit = null;
-            */
+            
         }
 
         private void btn_save_examination_Click(object sender, RoutedEventArgs e)
