@@ -113,7 +113,7 @@ namespace EHR_project.View.Patient_view
         }
 
         private void btn_delete_Click(object sender, RoutedEventArgs e)
-        {
+        {/* 
             foreach (var o in lb_visits.SelectedItems)
             {
                 foreach (Visit vis in visits)
@@ -135,6 +135,7 @@ namespace EHR_project.View.Patient_view
             MessageBox.Show(messageBoxText, caption, button, icon);
             dtb = null;
             visit = null;
+            */
         }
 
         private void btn_save_examination_Click(object sender, RoutedEventArgs e)
